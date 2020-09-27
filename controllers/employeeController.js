@@ -16,16 +16,38 @@ router.post('/', (req, res) => {
         updateRecord(req, res);
 });
 
+//Function to upload the file 
+function uploadFile(req,res){
+    try {
+        if(req.files){
+            const file = req.files.file
+            const filename = req.body.fullName+'.jpg'
+            file.mv('./uploads/' + filename, (err)=>{
+                if(!err){
+                    console.log('Data and File uploaded');
+                }
+                else
+                console.log(err);
+            })
+        }
+    } 
+    catch (error) {
+     console.log(error);
+  } 
+}
+
 
 function insertRecord(req, res) {
+    uploadFile(req,res);
     var employee = new Employee();
     employee.fullName = req.body.fullName;
     employee.email = req.body.email;
     employee.mobile = req.body.mobile;
-    employee.city = req.body.city;
+    employee.city = req.body.city; 
     employee.save((err, doc) => {
-        if (!err)
+        if (!err){
             res.redirect('employee/list');
+        }
         else {
             if (err.name == 'ValidationError') {
                 handleValidationError(err, req.body);
@@ -35,12 +57,13 @@ function insertRecord(req, res) {
                 });
             }
             else
-                console.log('Error during record insertion : ' + err);
+            console.log('Error during record insertion : ' + err);
         }
     });
 }
 
 function updateRecord(req, res) {
+    uploadFile(req,res);
     Employee.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
         if (!err) { res.redirect('employee/list'); }
         else {
@@ -62,7 +85,7 @@ router.get('/list', (req, res) => {
     Employee.find((err, docs) => {
         if (!err) {
             res.render("employee/list", {
-                list: docs
+            list: docs
             });
         }
         else {
@@ -100,6 +123,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
     Employee.findByIdAndRemove(req.params.id, (err, doc) => {
+        console.log(req.params);
         if (!err) {
             res.redirect('/employee/list');
         }
