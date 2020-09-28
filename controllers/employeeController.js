@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
     });
 });
 
+
 router.post('/', (req, res) => {
     if (req.body._id == '')
         insertRecord(req, res);
@@ -35,7 +36,6 @@ function uploadFile(req,res){
      console.log(error);
   } 
 }
-
 
 function insertRecord(req, res) {
     uploadFile(req,res);
@@ -80,7 +80,6 @@ function updateRecord(req, res) {
     });
 }
 
-
 router.get('/list', (req, res) => {
     Employee.find((err, docs) => {
         if (!err) {
@@ -94,6 +93,16 @@ router.get('/list', (req, res) => {
     });
 });
 
+router.get('/Alldata', (req, res) => {
+    Employee.find((err, docs) => {
+        if (!err) {
+            res.send(docs);
+        }
+        else {
+            console.log('Error in retrieving employee list :' + err);
+        }
+    });
+});
 
 function handleValidationError(err, body) {
     for (field in err.errors) {
