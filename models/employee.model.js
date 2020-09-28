@@ -13,7 +13,7 @@ var employeeSchema = new mongoose.Schema({
     },
     city: {
         type: String
-    }
+    } 
 });
 
 // Custom validation for email
