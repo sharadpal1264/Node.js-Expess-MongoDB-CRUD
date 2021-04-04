@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------------------
 
-Basic Nodejs Application with CRUD operations line on: http://ec2-13-126-139-127.ap-south-1.compute.amazonaws.com:3001/employee
+Basic Nodejs Application with CRUD operations line on: 
 
 -------------------------------------------------------------------------------------------------------------------------------
 
